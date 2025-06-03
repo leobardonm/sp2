@@ -1,4 +1,4 @@
-// Comentario de linea
+// Comentario de línea
 int main() {
     int x = 10;
     float y = 3.14;
@@ -7,3 +7,8 @@ int main() {
     }
     return 0;
 }
+
+
+/*
+prueba de fuego 
+*/
