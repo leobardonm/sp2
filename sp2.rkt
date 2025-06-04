@@ -9,16 +9,15 @@
 ; José Leobardo Navarro Márquez A01541324
 ; Regina Martínez Vazquez A01385455
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;; Utilidades
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (span color text)
   (string-append "<span style='color:" color "'>" text "</span>"))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;; Leer archivo línea por línea
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 (define (leer-archivo ruta)
   (call-with-input-file ruta
@@ -28,13 +27,33 @@
             (reverse lines)
             (loop (cons (read-line in 'any) lines))))))) ; ← importante mantener 'any para tabs
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;; Definiciones de sets y funciones de categorías léxicas
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 (define keyword-set
-  (set "for" "int" "return" "if" "else" "while" "class"
-       "public" "private" "try" "catch" "throw"))
+  (set 
+   "alignas"       "alignof"       "and"           "and_eq"        "asm"
+   "atomic_cancel" "atomic_commit" "atomic_noexcept" "auto"         "bitand"
+   "bitor"         "bool"          "break"         "case"          "catch"
+   "char"          "char8_t"       "char16_t"      "char32_t"      "class"
+   "compl"         "concept"       "const"         "consteval"     "constexpr"
+   "constinit"     "const_cast"    "continue"      "co_await"      "co_return"
+   "co_yield"      "decltype"      "default"       "delete"        "do"
+   "double"        "dynamic_cast"  "else"          "enum"          "explicit"
+   "export"        "extern"        "false"         "float"         "for"
+   "friend"        "goto"          "if"            "inline"        "int"
+   "long"          "mutable"       "namespace"     "new"           "noexcept"
+   "not"           "not_eq"        "nullptr"       "operator"      "or"
+   "or_eq"         "private"       "protected"     "public"        "register"
+   "reinterpret_cast" "requires"   "return"        "short"         "signed"
+   "sizeof"        "static"        "static_assert" "static_cast"   "struct"
+   "switch"        "synchronized"  "template"      "this"          "thread_local"
+   "throw"         "true"          "try"           "typedef"       "typeid"
+   "typename"      "union"         "unsigned"      "using"         "virtual"
+   "void"          "volatile"      "wchar_t"       "while"         "xor"
+   "xor_eq"))
+
 
 (define operador-set
   (set "+" "-" "*" "/" "%" "++" "--"
@@ -87,7 +106,7 @@
       (cadena? t)
       (nullptr? t)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;; Tokenización con expresión compuesta
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -120,16 +139,16 @@
   (cond
     [(regexp-match? #px"^\\s+$" t) t]                 ; espacios
     [(regexp-match? #px"^//" t) (span "#ff0000" t)]   ; comentario línea
-    [(cadena? t) (span "#4a86e8" t)]
-    [(caracter? t) (span "#4a86e8" t)]
-    [(booleano? t) (span "#4a86e8" t)]
-    [(real? t) (span "#4a86e8" t)]
+    [(cadena? t) (span "#4a86e8" t)] ; cadena
+    [(caracter? t) (span "#4a86e8" t)] ;caracter
+    [(booleano? t) (span "#4a86e8" t)] ;booleano
+    [(real? t) (span "#4a86e8" t)] ;real
     [(entero? t) (span "#4a86e8" t)]
     [(nullptr? t) (span "#4a86e8" t)]
     [(keyword? t) (span "#9900ff" t)]
-    [(identificador? t) (span "#00ff00" t)]
+    [(identificador? t) (span "#32CD32" t)]
     [(operador? t) (span "#ff05ec" t)]
-    [(delimitador? t) (span "#ffff00" t)]
+    [(delimitador? t) (span "#f9d208" t)]
     [else t])) ; cualquier otro símbolo sin clasificar
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
