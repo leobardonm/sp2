@@ -27,6 +27,11 @@
             (reverse lines)
             (loop (cons (read-line in 'any) lines))))))) ; ← importante mantener 'any para tabs
 
+;; Leer archivo como un solo flujo de caracteres
+(define (leer-archivo-completo ruta)
+  (call-with-input-file ruta
+    (lambda (in)
+      (port->string in))))
 
 ;; Definiciones de sets y funciones de categorías léxicas
 
@@ -107,29 +112,35 @@
       (nullptr? t)))
 
 
-;; Tokenización con expresión compuesta
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+;; Tokenización con expresión compuesta actualizada
 (define patron-token
   (pregexp
    (string-join
     '(
-      "//.*"                                ; comentario línea
-      "\"(\\\\.|[^\"\\\\])*\""              ; cadena
-      "'(\\\\.|[^'\\\\])'"                  ; carácter
-      "[0-9]+\\.[0-9]*([eE][+-]?[0-9]+)?"    ; flotante
-      "0[xX][0-9a-fA-F]+"                   ; entero hex
-      "[0-9]+"                              ; entero decimal
-      "[a-zA-Z_][a-zA-Z0-9_]*"              ; identificador o keyword
+      "/\\*[^*]*\\*+(?:[^/*][^*]*\\*+)*/"  ; comentario multilínea más preciso
+      "//[^\n]*"                            ; comentario línea (hasta fin de línea)
+      "\"(\\\\.|[^\"\\\\])*\""             ; cadena
+      "'(\\\\.|[^'\\\\])'"                 ; carácter
+      "[0-9]+\\.[0-9]*([eE][+-]?[0-9]+)?"  ; flotante
+      "0[xX][0-9a-fA-F]+"                  ; entero hex
+      "[0-9]+"                             ; entero decimal
+      "[a-zA-Z_][a-zA-Z0-9_]*"             ; identificador o keyword
       "<<=|>>=|==|!=|<=|>=|->|::|&&|\\|\\||<<" ; operadores dobles
-      "[+\\-*/%=<>&|^~!]"                   ; operadores simples
-      "[(){}\\[\\];,.?:]"                   ; delimitadores
-      "\\s+"                                ; espacios y tabs
+      "[+\\-*/%=<>&|^~!]"                  ; operadores simples
+      "[(){}\\[\\];,.?:]"                  ; delimitadores
+      "[ \t\n\r]+"                         ; espacios y saltos de línea
      )
     "|")))
 
 (define (tokenizar-linea linea)
   (regexp-match* patron-token linea))
+
+(define (tokenizar-flujo flujo)
+  (regexp-match* patron-token flujo))
+
+;; Resaltado del flujo completo
+(define (resaltar-flujo flujo)
+  (apply string-append (map resaltar-token (tokenizar-flujo flujo))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Resaltado por token
@@ -137,45 +148,35 @@
 
 (define (resaltar-token t)
   (cond
-    [(regexp-match? #px"^\\s+$" t) t]                 ; espacios
-    [(regexp-match? #px"^//" t) (span "#ff0000" t)]   ; comentario línea
-    [(cadena? t) (span "#4a86e8" t)] ; cadena
-    [(caracter? t) (span "#4a86e8" t)] ;caracter
-    [(booleano? t) (span "#4a86e8" t)] ;booleano
-    [(real? t) (span "#4a86e8" t)] ;real
-    [(entero? t) (span "#4a86e8" t)]
-    [(nullptr? t) (span "#4a86e8" t)]
-    [(keyword? t) (span "#9900ff" t)]
-    [(identificador? t) (span "#32CD32" t)]
-    [(operador? t) (span "#ff05ec" t)]
-    [(delimitador? t) (span "#f9d208" t)]
+    [(regexp-match? #rx"^/\\*" t) (span "#ff0000" t)]   ; Comentario multilínea
+    [(regexp-match? #rx"^//" t) (span "#ff0000" t)]     ; Comentario línea
+    [(regexp-match? #px"^[ \t\n\r]+$" t) t]            ; espacios y saltos de línea
+    [(cadena? t) (span "#4a86e8" t)]                    ; cadena
+    [(caracter? t) (span "#4a86e8" t)]                  ; carácter
+    [(booleano? t) (span "#4a86e8" t)]                  ; booleano
+    [(real? t) (span "#4a86e8" t)]                      ; real
+    [(entero? t) (span "#4a86e8" t)]                    ; entero
+    [(nullptr? t) (span "#4a86e8" t)]                   ; nullptr
+    [(keyword? t) (span "#9900ff" t)]                   ; palabra reservada
+    [(identificador? t) (span "#32CD32" t)]             ; identificador
+    [(operador? t) (span "#ff05ec" t)]                  ; operador
+    [(delimitador? t) (span "#f9d208" t)]               ; delimitador
     [else t])) ; cualquier otro símbolo sin clasificar
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Procesamiento de líneas
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(define (resaltar-linea linea)
-  (apply string-append (map resaltar-token (tokenizar-linea linea))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Generación de HTML
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+;; Generación de HTML considerando el flujo completo
 (define (generar-html entrada salida)
-  (define lineas (leer-archivo entrada))
+  (define flujo (leer-archivo-completo entrada))
   (define contenido-html
     (string-append
      "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>Resaltado</title></head><body style='font-family: monospace; white-space: pre;'>\n"
-     (apply string-append (map (lambda (l) (string-append (resaltar-linea l) "\n")) lineas))
+     (resaltar-flujo flujo)
      "</body></html>"))
   (call-with-output-file salida
     (lambda (out)
       (fprintf out "~a" contenido-html))
     #:exists 'replace))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Ejecutar resaltador
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 (generar-html "ejemplo.cpp" "resaltado.html")
