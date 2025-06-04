@@ -1,0 +1,16 @@
+Descripción de la Evidencia
+
+
+Selecciona un lenguaje de programación que te resulte familiar (C++). Determina todas las categorías léxicas que tiene (por ejemplo, palabras reservadas, operadores, literales, comentarios, etc.)
+Define las expresiones regulares que generen los tokens observados en las categorías léxicas.
+Usando el lenguaje funcional Racket, extiende la Activdad 3.2 e implementa un motor de expresiones regulares que tome las expresiones del punto 2 y con ello esté en condiciones de escanear los elementos léxicos de cualquier archivo fuente provisto del lenguaje de programación seleccionado.
+El programa debe convertir su entrada en documentos de HTML+CSS que resalten (con diferente color dependiendo de la categoría léxica) cada uno de los tokens indentificados.
+Utiliza las convenciones de codificación del lenguaje en el que está implementado tu programa.
+Plasma en un breve reporte (en formato PDF) lo siguiente:
+Lenguaje de programación elegido.
+Diccionario de categorías léxicas, indicando todos los elementos que estén dentro de cada categoría.
+Diseño de los automátas (NFAs o DFAs) que se encargan de procesar cada categoría léxica.
+NFA/DFA general que procesa todas las subcategorías léxicas,
+Diseño de la aplicación completa.
+Manual de usuario en caso de ser necesario.
+QUEDA EXPRESAMENTE PROHIBIDO USAR RACKET COMO UN LENGUAJE HÍBRIDO (ES DECIR, FUNCIONAL E IMPERATIVO). DEBE HACER USO DE RACKET EN FORMA TOTALMENTE FUNCIONAL.
