@@ -1,19 +1,34 @@
 <!DOCTYPE html><html><head><meta charset='UTF-8'><title>Resaltado</title></head><body style='font-family: monospace; white-space: pre;'>
-<span style='color:#32CD32'>include</span> <span style='color:#ff05ec'><</span><span style='color:#32CD32'>iostream</span><span style='color:#ff05ec'>></span> 
+<span style='color:#ffaa00'>#include</span> <span style='color:#00bfff'>&lt;iostream&gt;</span>
+<span style='color:#ffaa00'>#include</span> <span style='color:#4a86e8'>&quot;miarchivo.h&quot;</span>
+
 <span style='color:#9900ff'>using</span> <span style='color:#9900ff'>namespace</span> <span style='color:#32CD32'>std</span><span style='color:#f9d208'>;</span>
 
 <span style='color:#ff0000'>// Comentario de línea</span>
+<span style='color:#ff0000'>/*
+   Comentario multilínea
+   que abarca varias líneas
+*/</span>
+
+<span style='color:#ffaa00'>#define</span> <span style='color:#32CD32'>PI</span> <span style='color:#4a86e8'>3.14159</span>
+
 <span style='color:#9900ff'>int</span> <span style='color:#32CD32'>main</span><span style='color:#f9d208'>(</span><span style='color:#f9d208'>)</span> <span style='color:#f9d208'>{</span>
-    <span style='color:#9900ff'>int</span> <span style='color:#32CD32'>x</span> <span style='color:#ff05ec'>=</span> <span style='color:#4a86e8'>10</span><span style='color:#f9d208'>;</span>
-    <span style='color:#9900ff'>float</span> <span style='color:#32CD32'>y</span> <span style='color:#ff05ec'>=</span> <span style='color:#4a86e8'>3.14</span><span style='color:#f9d208'>;</span>
-    <span style='color:#9900ff'>if</span> <span style='color:#f9d208'>(</span><span style='color:#32CD32'>x</span> <span style='color:#ff05ec'>></span> <span style='color:#4a86e8'>5</span><span style='color:#f9d208'>)</span> <span style='color:#f9d208'>{</span>
-        <span style='color:#32CD32'>cout</span> <span style='color:#ff05ec'><<</span> <span style='color:#4a86e8'>"Mayor que cinco"</span><span style='color:#f9d208'>;</span>
-    <span style='color:#f9d208'>}</span> 
+    <span style='color:#9900ff'>int</span> <span style='color:#32CD32'>entero</span> <span style='color:#ff05ec'>=</span> <span style='color:#4a86e8'>42</span><span style='color:#f9d208'>;</span>
+    <span style='color:#9900ff'>float</span> <span style='color:#32CD32'>real</span> <span style='color:#ff05ec'>=</span> <span style='color:#ff05ec'>-</span><span style='color:#4a86e8'>3.14</span><span style='color:#f9d208'>;</span>
+    <span style='color:#9900ff'>bool</span> <span style='color:#32CD32'>bandera</span> <span style='color:#ff05ec'>=</span> <span style='color:#4a86e8'>true</span><span style='color:#f9d208'>;</span>
+    <span style='color:#9900ff'>char</span> <span style='color:#32CD32'>letra</span> <span style='color:#ff05ec'>=</span> <span style='color:#4a86e8'>'A'</span><span style='color:#f9d208'>;</span>
+    <span style='color:#9900ff'>const</span> <span style='color:#9900ff'>char</span><span style='color:#ff05ec'>*</span> <span style='color:#32CD32'>mensaje</span> <span style='color:#ff05ec'>=</span> <span style='color:#4a86e8'>&quot;Hola, mundo!&quot;</span><span style='color:#f9d208'>;</span>
+    
+    <span style='color:#9900ff'>if</span> <span style='color:#f9d208'>(</span><span style='color:#32CD32'>entero</span> <span style='color:#ff05ec'>&gt;</span> <span style='color:#4a86e8'>0</span> <span style='color:#ff05ec'>&amp;&amp;</span> <span style='color:#32CD32'>bandera</span><span style='color:#f9d208'>)</span> <span style='color:#f9d208'>{</span>
+        <span style='color:#32CD32'>cout</span> <span style='color:#ff05ec'>&lt;&lt;</span> <span style='color:#32CD32'>mensaje</span> <span style='color:#ff05ec'>&lt;&lt;</span> <span style='color:#32CD32'>endl</span><span style='color:#f9d208'>;</span>
+    <span style='color:#f9d208'>}</span> <span style='color:#9900ff'>else</span> <span style='color:#f9d208'>{</span>
+        <span style='color:#32CD32'>cout</span> <span style='color:#ff05ec'>&lt;&lt;</span> <span style='color:#4a86e8'>&quot;Valor no válido&quot;</span> <span style='color:#ff05ec'>&lt;&lt;</span> <span style='color:#32CD32'>endl</span><span style='color:#f9d208'>;</span>
+    <span style='color:#f9d208'>}</span>
+
+    <span style='color:#9900ff'>for</span> <span style='color:#f9d208'>(</span><span style='color:#9900ff'>int</span> <span style='color:#32CD32'>i</span> <span style='color:#ff05ec'>=</span> <span style='color:#4a86e8'>0</span><span style='color:#f9d208'>;</span> <span style='color:#32CD32'>i</span> <span style='color:#ff05ec'>&lt;</span> <span style='color:#4a86e8'>5</span><span style='color:#f9d208'>;</span> <span style='color:#ff05ec'>+</span><span style='color:#ff05ec'>+</span><span style='color:#32CD32'>i</span><span style='color:#f9d208'>)</span> <span style='color:#f9d208'>{</span>
+        <span style='color:#32CD32'>cout</span> <span style='color:#ff05ec'>&lt;&lt;</span> <span style='color:#32CD32'>i</span> <span style='color:#ff05ec'>&lt;&lt;</span> <span style='color:#4a86e8'>&quot; &quot;</span><span style='color:#f9d208'>;</span>
+    <span style='color:#f9d208'>}</span>
+
     <span style='color:#9900ff'>return</span> <span style='color:#4a86e8'>0</span><span style='color:#f9d208'>;</span>
 <span style='color:#f9d208'>}</span>
-
-<span style='color:#9900ff'>int</span> <span style='color:#32CD32'>literal</span> <span style='color:#ff05ec'>=</span> <span style='color:#ff05ec'>-</span><span style='color:#4a86e8'>1</span><span style='color:#f9d208'>;</span> 
-
-<span style='color:#ff0000'>/*
-comentario multilinea 
-*/</span></body></html>
+</body></html>
