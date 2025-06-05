@@ -167,6 +167,14 @@
       (fprintf out "~a" contenido-html))
     #:exists 'replace))
 
+;; Validación de extensión para archivos C++
+(define (ext-valida? ruta)
+  (let* ([partes (string-split ruta #rx"\\.")]
+         [ext (if (> (length partes) 1)
+                  (string-downcase (last partes))
+                  "")])
+    (member ext '("cpp" "cc" "cxx" "hpp" "h"))))
+
 ;; Función principal
 (define (main)
   (define entrada
@@ -177,10 +185,11 @@
   (define salida
     (string-append
      (path->string (path-replace-extension entrada "")) ".html"))
-  (if (file-exists? entrada)
+  (if (and (file-exists? entrada)
+           (ext-valida? entrada))
       (begin
         (generar-html entrada salida)
         (printf "Archivo resaltado generado: ~a\n" salida))
-      (printf "Error: El archivo '~a' no existe\n" entrada)))
+      (printf "Error: El archivo '~a' no existe o su extensión no es válida (.cpp, .cc, .cxx, .hpp, .h)\n" entrada)))
 
 (main)
