@@ -1,13 +1,13 @@
+; Resaltador de sintaxis simple para C++ en Racket como lenguaje funcional
+; José Leobardo Navarro Márquez A01541324
+; Regina Martínez Vazquez A01385455
+
 #lang racket
 
 (require racket/file
          racket/format
          racket/set
          racket/string)
-
-; Resaltador de sintaxis simple para C++ en Racket como lenguaje funcional
-; José Leobardo Navarro Márquez A01541324
-; Regina Martínez Vazquez A01385455
 
 ;; Leer archivo como cadena
 (define (leer-archivo-completo ruta)
@@ -98,8 +98,7 @@
 (define (cabecera? t)
   (regexp-match? #rx"^<[^>]+>$" t))
 
-(define (cabecera-usuario? t)
-  (regexp-match? #rx"^\"[^\"]+\"$" t))
+
 
 ;; Tokenización
 (define patron-token
@@ -146,7 +145,6 @@
     [(keyword? t) (span "#9900ff" (escape-html t))]
     [(directiva-preprocesador? t) (span "#ffaa00" (escape-html t))]
     [(cabecera? t) (span "#00bfff" (escape-html t))]
-    [(cabecera-usuario? t) (span "#00bfff" (escape-html t))]
     [(identificador? t) (span "#32CD32" (escape-html t))]
     [(operador? t) (span "#ff05ec" (escape-html t))]
     [(delimitador? t) (span "#f9d208" (escape-html t))]
