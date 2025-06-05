@@ -10,11 +10,6 @@
 ; Regina Martínez Vazquez A01385455
 
 
-;; Utilidades
-
-(define (span color text)
-  (string-append "<span style='color:" color "'>" text "</span>"))
-
 
 ;; Leer archivo línea por línea
 
@@ -86,7 +81,7 @@
        (not (keyword? token))))
 
 (define (entero? t)
-  (regexp-match? #rx"^(0[xX][0-9a-fA-F]+|[1-9][0-9]*|0)$" t))
+  (regexp-match? #rx"^[+-]?(0[xX][0-9a-fA-F]+|[1-9][0-9]*|0)$" t))
 
 (define (real? t)
   (regexp-match? #rx"^[+-]?([0-9]*\\.[0-9]+|[0-9]+\\.[0-9]*)([eE][+-]?[0-9]+)?$" t))
@@ -146,6 +141,11 @@
 ;; Resaltado por token
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+(define (span color text)
+  (string-append "<span style='color:" color "'>" text "</span>"))
+
+
 (define (resaltar-token t)
   (cond
     [(regexp-match? #rx"^/\\*" t) (span "#ff0000" t)]   ; Comentario multilínea
@@ -176,7 +176,22 @@
       (fprintf out "~a" contenido-html))
     #:exists 'replace))
 
-;; Ejecutar resaltador
+;; Función para solicitar el nombre del archivo al usuario
+(define (solicitar-archivo)
+  (display "Ingrese el nombre del archivo a resaltar: ")
+  (flush-output)
+  (read-line))
 
+;; Función principal del programa
+(define (main)
+  (let* ([archivo-entrada (solicitar-archivo)]
+         [nombre-base (path->string (path-replace-extension archivo-entrada ""))]
+         [archivo-salida (string-append nombre-base ".html")])
+    (if (file-exists? archivo-entrada)
+        (begin
+          (generar-html archivo-entrada archivo-salida)
+          (printf "Archivo resaltado generado: ~a\n" archivo-salida))
+        (printf "Error: El archivo '~a' no existe\n" archivo-entrada))))
 
-(generar-html "ejemplo.cpp" "resaltado.html")
+;; Ejecutar el programa
+(main)

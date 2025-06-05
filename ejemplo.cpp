@@ -11,7 +11,8 @@ int main() {
     return 0;
 }
 
+int literal = -1; 
 
 /*
-prueba de fuego 
+comentario multilinea 
 */
