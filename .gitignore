@@ -1,0 +1,10 @@
+# Ignore temporary files
+*.tmp
+*.temp
+*~
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+coderunner*.*
