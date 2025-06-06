@@ -3,7 +3,7 @@
 ## 🧾 Descripción General
 Este proyecto implementa un resaltador de sintaxis para archivos fuente en C++ utilizando **Racket en paradigma funcional puro**. El programa lee un archivo `.cpp`, `.h`, etc., identifica los **tokens léxicos** usando expresiones regulares y genera un archivo HTML con estilo para visualizar el código con colores distintivos según su categoría.
 
-## ✨ Características Principales
+## ⚙️ Características Principales
 - Implementado 100% en estilo funcional con Racket
 - Lectura y análisis léxico de código C++
 - Generación automática de HTML con coloreado sintáctico
@@ -22,7 +22,7 @@ Este proyecto implementa un resaltador de sintaxis para archivos fuente en C++ u
    ```
 2. Asegúrate de tener Racket en tu PATH.
 
-## 🚀 Uso
+## Uso
 1. Ejecuta el archivo desde terminal:
    ```bash
    racket sp2.rkt
@@ -30,10 +30,10 @@ Este proyecto implementa un resaltador de sintaxis para archivos fuente en C++ u
 2. Escribe el nombre del archivo a resaltar (ejemplo: `codigo.cpp`)
 3. Se generará un archivo `codigo.html` con el resaltado sintáctico
 
-## 📋 Validación de Archivos
+## Validación de Archivos
 El archivo debe tener extensión `.cpp`, `.cc`, `.cxx`, `.hpp`, o `.h`, de lo contrario, el programa mostrará un error.
 
-## 🧠 Categorías Léxicas
+## Categorías Léxicas
 
 Tabla con las categorías reconocidas por el resaltador:
 
@@ -66,7 +66,7 @@ Tabla con las categorías reconocidas por el resaltador:
 ├── ejemplo.html        ; Salida HTML resaltada
 ```
 
-## 👩‍💻 Autores
+## ✍️ Autores
 - José Leobardo Navarro Márquez – A01541324
 - Regina Martínez Vázquez – A01385455
 
