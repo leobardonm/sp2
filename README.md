@@ -18,6 +18,7 @@ Este proyecto implementa un resaltador de sintaxis para archivos fuente en C++ u
 1. Clona el repositorio:
    ```bash
    git clone https://github.com/leobardonm/sp2.git
+   cd sp2
    ```
 2. Asegúrate de tener Racket en tu PATH.
 
